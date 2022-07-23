@@ -19,7 +19,7 @@ ecs_private_dns: ecs.private
 ecs_fluentbit_image: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/fluentbit:main
 jenkins:
   branch: main
-  secret: 86480fc76627e2f86d162089ba32633c2383b8e946c9f570328f266620ebc9d3
+  secret: f59d462615fb0089447ef62ab25b9eb78aa5b57877f6383b093fdbbd50d2afb8
 github:
   id: interopera-bot
   token: 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
