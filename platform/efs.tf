@@ -6,6 +6,7 @@ module platform_efs {
     access_points = merge(
         {
             "src-jenkins" = { root_path = "/share", owner_gid = 0 }
-        }
+            "chain-bootstrap" = { root_path = "/share", owner_gid = 0 }
+        },
     )
 }
