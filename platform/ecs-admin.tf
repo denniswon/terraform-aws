@@ -70,7 +70,7 @@ module  jenkin_master {
         },
         {
             name = "GOOGLE_APP_DOMAIN"
-            value = var.system_config["main_dns_domain"]
+            value = var.system_config["gcp_login_dns"]
         },
         {
           name = "GITHUB_ID"
@@ -424,7 +424,7 @@ module  monitor_grafana {
         },
         {
           name = "GF_AUTH_GOOGLE_ALLOWED_DOMAINS"
-          value = var.system_config["main_dns_domain"]
+          value = var.system_config["gcp_login_dns"]
         }
       ]
       mountPoints = [
