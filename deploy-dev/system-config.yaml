@@ -1,0 +1,31 @@
+main_dns_domain:  dev.shareableasset.com
+aws_default_region: ap-southeast-1
+aws_vpc_name: interopera
+aws_bucket_alb_id: "114774131450"
+vpc_cidr_prefix: "18.0"
+ecr_repositories:
+  [
+    "jenkin-master",
+    "jenkin-agent",
+    "prometheus",
+    "grafana",
+    "loki",
+    "fluentbit",
+    "gaia",
+  ]
+ecs_ami_version: amazon-ecs@v0.0.1
+ecs_private_dns: ecs.private
+ecs_fluentbit_image: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/fluentbit:main
+jenkins:
+  branch: main
+  secret: 86480fc76627e2f86d162089ba32633c2383b8e946c9f570328f266620ebc9d3
+github:
+  id: interopera-bot
+  token: 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
+google_auth:
+  client_id: 653780333302-l4osm6m2drmak7vl6r2tbo7vf3t3oafc.apps.googleusercontent.com
+  client_secret: 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
+grafana:
+  admin_password: fXPxURfq4mRXcgv496OmpXjU86vVT5oVJ5w7OSCN7Vk
+  google_id: 653780333302-98m7sssok4si9s50jofhlrorm91h0mhh.apps.googleusercontent.com
+  google_secret: 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

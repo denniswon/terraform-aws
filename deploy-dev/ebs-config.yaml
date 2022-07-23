@@ -1,0 +1,19 @@
+monitor-loki:
+  volume_size: 100
+  volume_type: gp2
+
+monitor-prometheus:
+  volume_size: 30
+  volume_type: gp2
+
+monitor-grafana:
+  volume_size: 30
+  volume_type: gp2
+
+jenkins-master:
+  volume_size: 30
+  volume_type: gp2
+
+jenkins-worker:
+  volume_size: 30
+  volume_type: gp2

@@ -1,0 +1,24 @@
+monitor-prometheus:
+  image:
+    default: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/prometheus:main
+  replicas: 1
+
+monitor-grafana:
+  image:
+    default: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/grafana:main
+  replicas: 1
+
+monitor-loki:
+  image:
+    default: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/loki:main
+  replicas: 1
+
+jenkins-master:
+  image:
+    default: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/jenkin-master:main
+  replicas: 1
+
+jenkins-worker:
+  image:
+    default: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/jenkin-agent:main
+  replicas: 0

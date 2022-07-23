@@ -1,0 +1,4 @@
+.terraform
+*/.terraform.*
+rootkey.csv
+output-lambda
