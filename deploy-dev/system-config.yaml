@@ -12,6 +12,7 @@ ecr_repositories:
     "grafana",
     "loki",
     "fluentbit",
+    "ecs-utils",
     "gaia",
   ]
 ecs_ami_version: amazon-ecs@v0.0.1

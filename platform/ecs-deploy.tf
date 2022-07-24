@@ -16,14 +16,14 @@ module "bootstrap_chain_validator" {
       image     = var.ecs_config["bootstrap-chain-validator"]["image"]["default"]
       command   = [
         "gaiad", "testnet", "--chain-id", "${var.system_config["chain_gaia"]["CHAIN_ID"]}", "--v", "${var.system_config["chain_gaia"]["NUMS_OF_VALIDATOR"]}",
-        "--output-dir", "/genesis", "--starting-ip-address", "${var.system_config["chain_gaia"]["BOOTSTRAP_IP_ADDRESS"]}",
+        "--output-dir", "/mnt/efs/chain-bootstrap", "--starting-ip-address", "${var.system_config["chain_gaia"]["BOOTSTRAP_IP_ADDRESS"]}",
         "--keyring-backend", "${var.system_config["chain_gaia"]["KEYRING_BACKEND"]}", "--minimum-gas-prices",  "${var.system_config["chain_gaia"]["MIN_GAS_PRICE"]}",
         "--node-dir-prefix", "validator"
       ]
       essential = false
     #   mountPoints = [
     #     {
-    #       containerPath = "/genesis"
+    #       containerPath = "/mnt/efs/chain-bootstrap"
     #       sourceVolume  = "chain-bootstrap"
     #     }
     #   ]
