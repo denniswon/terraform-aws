@@ -34,7 +34,7 @@ grafana:
 chain_gaia:
   BOOTSTRAP_IP_PREFIX: "9.9.9"
   VALIDATOR_STATIC_IPS: [
-    "",
+    "18.0.41.50",
     "",
     "",
     ""

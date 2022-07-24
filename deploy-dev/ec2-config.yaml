@@ -7,3 +7,8 @@ ecs-monitors:
   instance_type: m5.large
   root_volume_size: 30
   capacity: 1
+
+ecs-validator:
+  instance_type: t3.medium
+  root_volume_size: 30
+  capacity: 1

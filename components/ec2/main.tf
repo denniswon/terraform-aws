@@ -1,36 +1,35 @@
-# Provider
-provider "aws" {
-  alias = "this"
-}
-
 locals {
   tf_userdata_map = {
-    "userdata-ecs" = [for index in range(var.instance_count): {
-      tf_ecs_cluster = length(var.ecs_cluster) > 0 ? var.ecs_cluster : "ec2-${var.instance_name}${index + 1}"
-      tf_ec2_name = "ec2-${var.instance_name}${index + 1}"
-    }]
+    "userdata-ecs" = {
+      tf_ecs_cluster = length(var.ecs_cluster) > 0 ? var.ecs_cluster : "ec2-${var.instance_name}"
+      tf_ec2_name = "ec2-${var.instance_name}"
+    }
   }
 }
 
 # Resources
 resource "aws_instance" "ec2" {
-  count                       = var.instance_count
-  provider                    = aws.this
   ami                         = var.ami_id
-  instance_type               = var.instance_type[count.index]
+  instance_type               = var.instance_type
   user_data                   = join("\n", [
-    templatefile("${path.module}/${var.bootstrap_src}.sh", local.tf_userdata_map[var.bootstrap_src][count.index]),
+    templatefile("${path.module}/${var.bootstrap_src}.sh", local.tf_userdata_map[var.bootstrap_src]),
     var.additional_user_data
   ])
   monitoring                  = true
   vpc_security_group_ids      = var.security_group_ids
-  subnet_id                   = var.subnet_ids[count.index % (length(var.subnet_ids))]
+  subnet_id                   = var.subnet_id
   associate_public_ip_address = var.has_public_ip
-  iam_instance_profile        = var.role == "" ? aws_iam_instance_profile.iam_role[0].name : var.role
+  iam_instance_profile        = aws_iam_instance_profile.iam_role.name
   placement_group             = var.placement_group
-  private_ip                  = var.private_ip == null ? null : var.private_ip[count.index]
+  private_ip                  = var.private_ip == null ? null : var.private_ip
   ebs_optimized               = var.ebs_optimized
   disable_api_termination     = var.disable_api_termination
+
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
+
+  hibernation = false
 
   root_block_device {
     volume_type = var.root_volume_type
@@ -57,16 +56,16 @@ resource "aws_instance" "ec2" {
 
   tags = merge(
     {
-      Name      = "ec2-${var.instance_name}${count.index + 1}",
+      Name      = "ec2-${var.instance_name}",
     },
-    var.tag_additional
+    var.additional_tags
   )
 
   volume_tags = merge(
     {
-      Name      = "vol-${var.instance_name}${count.index + 1}",
+      Name      = "vol-${var.instance_name}",
     },
-    var.tag_additional
+    var.additional_tags
   )
 
   lifecycle {
