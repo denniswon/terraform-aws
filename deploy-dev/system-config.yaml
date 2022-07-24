@@ -32,7 +32,7 @@ grafana:
   google_id: 653780333302-98m7sssok4si9s50jofhlrorm91h0mhh.apps.googleusercontent.com
   google_secret: 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
 chain_gaia:
-  BOOTSTRAP_IP_ADDRESS: "9.9.9.0"
+  BOOTSTRAP_IP_PREFIX: "9.9.9"
   NUMS_OF_VALIDATOR: "4"
   NUMS_OF_NODE: "6"
   KEYRING_BACKEND: test
