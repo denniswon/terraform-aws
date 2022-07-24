@@ -35,9 +35,9 @@ chain_gaia:
   BOOTSTRAP_IP_PREFIX: "9.9.9"
   VALIDATOR_STATIC_IPS: [
     "18.0.41.50",
-    "",
-    "",
-    ""
+    "18.0.42.76",
+    "18.0.43.70",
+    "18.0.41.13"
   ]
   NUMS_OF_NODE: "6"
   KEYRING_BACKEND: test
