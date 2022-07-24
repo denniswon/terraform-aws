@@ -30,3 +30,10 @@ grafana:
   admin_password: fXPxURfq4mRXcgv496OmpXjU86vVT5oVJ5w7OSCN7Vk
   google_id: 653780333302-98m7sssok4si9s50jofhlrorm91h0mhh.apps.googleusercontent.com
   google_secret: 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
+chain_gaia:
+  BOOTSTRAP_IP_ADDRESS: "192.168.10.2"
+  NUMS_OF_VALIDATOR: "4"
+  NUMS_OF_NODE: "6"
+  KEYRING_BACKEND: test
+  CHAIN_ID: interopera
+  MIN_GAS_PRICE: 0uatom
