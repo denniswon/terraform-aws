@@ -20,7 +20,7 @@ module "bootstrap_chain_validator" {
       environment = [
         {
           name = "NUMS_OF_VALIDATOR"
-          value = var.system_config["chain_gaia"]["NUMS_OF_VALIDATOR"]
+          value = tostring(length(var.system_config["chain_gaia"]["VALIDATOR_STATIC_IPS"]))
         },
       ]
       mountPoints = [
@@ -34,7 +34,7 @@ module "bootstrap_chain_validator" {
       name      = "bootstrap-chain-validator"
       image     = var.ecs_config["bootstrap-chain-validator"]["image"]["default"]
       command   = [
-        "gaiad", "testnet", "--chain-id", "${var.system_config["chain_gaia"]["CHAIN_ID"]}", "--v", "${var.system_config["chain_gaia"]["NUMS_OF_VALIDATOR"]}",
+        "gaiad", "testnet", "--chain-id", "${var.system_config["chain_gaia"]["CHAIN_ID"]}", "--v", "${tostring(length(var.system_config["chain_gaia"]["VALIDATOR_STATIC_IPS"]))}",
         "--output-dir", "/mnt/efs/chain-bootstrap", "--starting-ip-address", "${var.system_config["chain_gaia"]["BOOTSTRAP_IP_PREFIX"]}.0",
         "--keyring-backend", "${var.system_config["chain_gaia"]["KEYRING_BACKEND"]}", "--minimum-gas-prices",  "${var.system_config["chain_gaia"]["MIN_GAS_PRICE"]}",
         "--node-dir-prefix", "validator"

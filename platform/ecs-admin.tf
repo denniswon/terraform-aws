@@ -151,7 +151,7 @@ resource aws_ebs_volume  jenkins_master {
 # jenkin worker
 module  jenkin_worker {
   source = "../components/ecs-service"
-  count                   = var.asg_config["ecs-jenkins"]["capacity"]
+  count                   = var.ec2_config["ecs-jenkins"]["capacity"]
   cluster_id              = aws_ecs_cluster.admin.id
   app_name                = "jenkins-worker-${count.index}"
   subnet_ids              = module.vpc.subnet_private_with_nat_ids
@@ -283,7 +283,7 @@ module  jenkin_worker {
 }
 
 resource aws_ebs_volume  jenkins_worker {
-  count = var.asg_config["ecs-jenkins"]["capacity"]
+  count = var.ec2_config["ecs-jenkins"]["capacity"]
   availability_zone = "${var.system_config["aws_default_region"]}${local.aws_zones_indexes[count.index % 3]}"
   size              = var.ebs_config["jenkins-worker"]["volume_size"]
   encrypted = true
@@ -296,7 +296,7 @@ resource aws_ebs_volume  jenkins_worker {
 # prometheus
 module  monitor_prometheus {
   source = "../components/ecs-service"
-  count                   = var.asg_config["ecs-monitors"]["capacity"]
+  count                   = var.ec2_config["ecs-monitors"]["capacity"]
   cluster_id              = aws_ecs_cluster.admin.id
   app_name                = "monitor-prometheus-${count.index}"
   subnet_ids              = module.vpc.subnet_private_with_nat_ids
@@ -365,7 +365,7 @@ module  monitor_prometheus {
 }
 
 resource aws_ebs_volume monitor_prometheus {
-  count = var.asg_config["ecs-monitors"]["capacity"]
+  count = var.ec2_config["ecs-monitors"]["capacity"]
   availability_zone = "${var.system_config["aws_default_region"]}${local.aws_zones_indexes[count.index % 3]}"
   size              = var.ebs_config["monitor-prometheus"]["volume_size"]
   encrypted = true
@@ -378,7 +378,7 @@ resource aws_ebs_volume monitor_prometheus {
 # grafana
 module  monitor_grafana {
   source = "../components/ecs-service"
-  count                   = var.asg_config["ecs-monitors"]["capacity"]
+  count                   = var.ec2_config["ecs-monitors"]["capacity"]
   cluster_id              = aws_ecs_cluster.admin.id
   app_name                = "monitor-grafana-${count.index}"
   subnet_ids              = module.vpc.subnet_private_with_nat_ids
@@ -456,7 +456,7 @@ module  monitor_grafana {
 }
 
 resource aws_ebs_volume monitor_grafana {
-  count = var.asg_config["ecs-monitors"]["capacity"]
+  count = var.ec2_config["ecs-monitors"]["capacity"]
   availability_zone = "${var.system_config["aws_default_region"]}${local.aws_zones_indexes[count.index % 3]}"
   size              = var.ebs_config["monitor-grafana"]["volume_size"]
   encrypted = true
@@ -469,7 +469,7 @@ resource aws_ebs_volume monitor_grafana {
 # loki
 module  monitor_loki {
   source = "../components/ecs-service"
-  count                   = var.asg_config["ecs-monitors"]["capacity"]
+  count                   = var.ec2_config["ecs-monitors"]["capacity"]
   cluster_id              = aws_ecs_cluster.admin.id
   app_name                = "monitor-loki-${count.index}"
   subnet_ids              = module.vpc.subnet_private_with_nat_ids
@@ -526,7 +526,7 @@ module  monitor_loki {
 }
 
 resource aws_ebs_volume monitor_loki {
-  count = var.asg_config["ecs-monitors"]["capacity"]
+  count = var.ec2_config["ecs-monitors"]["capacity"]
   availability_zone = "${var.system_config["aws_default_region"]}${local.aws_zones_indexes[count.index % 3]}"
   size              = var.ebs_config["monitor-loki"]["volume_size"]
   encrypted = true

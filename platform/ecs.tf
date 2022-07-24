@@ -13,12 +13,12 @@ resource aws_ecs_cluster admin {
 }
 module "asg_admin_jenkins" {
   source                     = "../components/autoscaling"
-  count                      = var.asg_config["ecs-jenkins"]["capacity"]
+  count                      = var.ec2_config["ecs-jenkins"]["capacity"]
   ami_id                     = data.aws_ami.ecs.id
   asg_name                   = "${aws_ecs_cluster.admin.name}-jenkins-${count.index}"
   ecs_cluster                = aws_ecs_cluster.admin.name
-  instance_type              = var.asg_config["ecs-jenkins"]["instance_type"]
-  root_volume_size           = var.asg_config["ecs-jenkins"]["root_volume_size"]
+  instance_type              = var.ec2_config["ecs-jenkins"]["instance_type"]
+  root_volume_size           = var.ec2_config["ecs-jenkins"]["root_volume_size"]
   security_group_ids         = [module.ecs_security_group.security_group_id]
   subnet_ids                 = [module.vpc.subnet_private_with_nat_ids[count.index % 3]]
   ssm_log_s3_arn             = module.ssm_log_s3.arn
@@ -32,12 +32,12 @@ module "asg_admin_jenkins" {
 
 module "asg_admin_monitors" {
   source                     = "../components/autoscaling"
-  count                      = var.asg_config["ecs-monitors"]["capacity"]
+  count                      = var.ec2_config["ecs-monitors"]["capacity"]
   ami_id                     = data.aws_ami.ecs.id
   asg_name                   = "${aws_ecs_cluster.admin.name}-monitors-${count.index}"
   ecs_cluster                = aws_ecs_cluster.admin.name
-  instance_type              = var.asg_config["ecs-monitors"]["instance_type"]
-  root_volume_size           = var.asg_config["ecs-monitors"]["root_volume_size"]
+  instance_type              = var.ec2_config["ecs-monitors"]["instance_type"]
+  root_volume_size           = var.ec2_config["ecs-monitors"]["root_volume_size"]
   security_group_ids         = [module.ecs_security_group.security_group_id]
   subnet_ids                 = [module.vpc.subnet_private_with_nat_ids[count.index % 3]]
   ssm_log_s3_arn             = module.ssm_log_s3.arn
@@ -47,4 +47,10 @@ module "asg_admin_monitors" {
     group     = "ecs-${aws_ecs_cluster.admin.name}-monitors"
     component = "ecs"
   }
+}
+
+# gaia blockchain cluster
+resource "aws_eip" "validators" {
+  count    = length(var.system_config["chain_gaia"]["VALIDATOR_STATIC_IPS"])
+  vpc      = true
 }

@@ -18,7 +18,7 @@ provider "aws" {
 
 locals {
   system_config        = yamldecode(file("system-config.yaml"))
-  asg_config           = yamldecode(file("asg-config.yaml"))
+  ec2_config           = yamldecode(file("ec2-config.yaml"))
   ecs_config           = yamldecode(file("ecs-config.yaml"))
   ebs_config           = yamldecode(file("ebs-config.yaml"))
 }
@@ -26,7 +26,7 @@ locals {
 module "platform" {
   source               = "../platform"
   system_config        = local.system_config
-  asg_config           = local.asg_config
+  ec2_config           = local.ec2_config
   ecs_config           = local.ecs_config
   ebs_config           = local.ebs_config
 }

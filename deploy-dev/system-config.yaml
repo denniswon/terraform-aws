@@ -33,7 +33,12 @@ grafana:
   google_secret: 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
 chain_gaia:
   BOOTSTRAP_IP_PREFIX: "9.9.9"
-  NUMS_OF_VALIDATOR: "4"
+  VALIDATOR_STATIC_IPS: [
+    "",
+    "",
+    "",
+    ""
+  ]
   NUMS_OF_NODE: "6"
   KEYRING_BACKEND: test
   CHAIN_ID: interopera
