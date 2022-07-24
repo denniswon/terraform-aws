@@ -34,5 +34,6 @@ chain:
 bootstrap-chain-validator:
   image:
     default: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/gaia:main
+    ecs-utils: 868968213119.dkr.ecr.ap-southeast-1.amazonaws.com/ecs-utils:main
   replicas: 0
   network: bridge

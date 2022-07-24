@@ -12,6 +12,25 @@ module "bootstrap_chain_validator" {
   fluentbit_plugin_image = var.system_config["ecs_fluentbit_image"]
   containers = [
     {
+      name = "is-empty-bootrap"
+      image = var.ecs_config["bootstrap-chain-validator"]["image"]["ecs-utils"]
+      essential               = false
+      user             = "0"
+      command          = ["bash", "/app/is-empty-bootrap.sh"]
+      environment = [
+        {
+          name = "NUMS_OF_VALIDATOR"
+          value = var.system_config["chain_gaia"]["NUMS_OF_VALIDATOR"]
+        },
+      ]
+      mountPoints = [
+        {
+            containerPath = "/mnt/efs/chain-bootstrap"
+            sourceVolume  = "chain-bootstrap"
+        }
+      ]
+    },
+    {
       name      = "bootstrap-chain-validator"
       image     = var.ecs_config["bootstrap-chain-validator"]["image"]["default"]
       command   = [
@@ -21,22 +40,28 @@ module "bootstrap_chain_validator" {
         "--node-dir-prefix", "validator"
       ]
       essential = false
-    #   mountPoints = [
-    #     {
-    #       containerPath = "/mnt/efs/chain-bootstrap"
-    #       sourceVolume  = "chain-bootstrap"
-    #     }
-    #   ]
+      mountPoints = [
+        {
+          containerPath = "/mnt/efs/chain-bootstrap"
+          sourceVolume  = "chain-bootstrap"
+        }
+      ]
+      dependsOn = [
+        {
+            containerName = "is-empty-bootrap"
+            condition = "SUCCESS"
+        }
+      ]
     },
   ]
   volumes = [
-    # {
-    #   name = "chain-bootstrap"
-    #   efs_volume_configuration = {
-    #     file_system_id  = module.platform_efs.efs_id
-    #     access_point_id = module.platform_efs.access_point_ids["chain-bootstrap"].id
-    #   }
-    # },
+    {
+      name = "chain-bootstrap"
+      efs_volume_configuration = {
+        file_system_id  = module.platform_efs.efs_id
+        access_point_id = module.platform_efs.access_point_ids["chain-bootstrap"].id
+      }
+    },
   ]
   placementConstraints = [
     {
