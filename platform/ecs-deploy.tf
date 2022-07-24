@@ -53,6 +53,29 @@ module "bootstrap_chain_validator" {
         }
       ]
     },
+    {
+      name = "update-validator-ip"
+      image = var.ecs_config["bootstrap-chain-validator"]["image"]["ecs-utils"]
+      essential               = false
+      user             = "0"
+      command          = ["tail", "-f", "/dev/null"]
+      environment = [
+        {
+          name = "VALIDATOR_STATIC_IPS"
+          value = join(",", var.system_config["chain_gaia"]["VALIDATOR_STATIC_IPS"])
+        },
+        {
+          name = "BOOTSTRAP_IP_PREFIX"
+          value = var.system_config["chain_gaia"]["BOOTSTRAP_IP_PREFIX"]
+        },
+      ]
+      mountPoints = [
+        {
+            containerPath = "/mnt/efs/chain-bootstrap"
+            sourceVolume  = "chain-bootstrap"
+        }
+      ]
+    },
   ]
   volumes = [
     {
